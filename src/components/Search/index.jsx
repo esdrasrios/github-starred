@@ -9,23 +9,28 @@ class SearchInput extends Component {
   }
   componentDidMount() {
     this.props.fetchUser('rodrigorm');
-    console.log(this.props);
   }
 
-  handleChange = async (e) => {
-    await this.setState({ searchTerm: e.target.value });
+  handleChange = (e) => {
+    this.setState({ searchTerm: e.target.value });
+  }
+
+  handleClick = () => {
     this.props.fetchUser(this.state.searchTerm);
   }
 
   render() {
     return (
-      <input
-        className="searchBox__input"
-        type="text"
-        value={this.state.searchTerm}
-        onChange={this.handleChange}
-        placeholder="Type something here..."
-      />
+      <div>
+        <input
+          className="searchBox__input"
+          type="text"
+          value={this.state.searchTerm}
+          onChange={this.handleChange}
+          placeholder="Type something here..."
+        />
+        <button onClick={this.handleClick}> Search </button>
+      </div>
     );
   }
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class MainContent extends Component {
   renderStarredRepos() {
-    if (this.props.user.length) {
+    if (this.props.user !== undefined) {
       return this.props.user.map(n => <div key={n.id}> {n.name}</div>);
     }
     return <div> Loading </div>;
@@ -18,6 +18,8 @@ class MainContent extends Component {
   }
 }
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({ 
+  user: state.user.results,
+});
 
 export default connect(mapStateToProps, null)(MainContent);
