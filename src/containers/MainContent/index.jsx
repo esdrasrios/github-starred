@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class MainContent extends Component {
   renderStarredRepos() {
     if (this.props.user !== undefined) {
-      return this.props.user.map(n => <div key={n.id}> {n.name}</div>);
+      return this.props.user.map(n => <div key={n.id}> {n.name} | {n.owner.login}</div>);
     }
     return <div> Loading </div>;
   }

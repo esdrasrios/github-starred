@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import parse from 'parse-link-header';
-import { FETCH_USER, NEXT_PAGE, PREVIOUS_PAGE, GO_TO_PAGE } from './types';
+import { FETCH_USER, NEXT_PAGE, PREVIOUS_PAGE, GO_TO_PAGE, SORT, FILTER } from './types';
 import API_KEY from './apiKey';
 
 const API_URI = 'https://api.github.com/users';
@@ -32,14 +32,20 @@ export const goToPage = page => ({
   payload: page,
 });
 
-// export const goToPage = (page) => {
-//   console.log(page);
-// };
-
 export const nextPage = () => ({
   type: NEXT_PAGE,
 });
 
 export const previousPage = () => ({
   type: PREVIOUS_PAGE,
+});
+
+export const sortBy = type => ({
+  type: SORT,
+  payload: type,
+});
+
+export const filterBy = language => ({
+  type: FILTER,
+  payload: language,
 });
