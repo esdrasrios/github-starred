@@ -7,7 +7,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  goToPage: (p) => { dispatch(goToPage(p))},
+  goToPage: (page) => { dispatch(goToPage(page)); },
   nextPage: () => dispatch(nextPage()),
   previousPage: () => dispatch(previousPage()),
 });

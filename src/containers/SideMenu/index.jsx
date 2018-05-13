@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { sortBy, filterBy } from '../../actions/index';
+import { sortBy, filterBy, fetchUser } from '../../actions/index';
 import SideMenu from '../../components/SideMenu';
 
 const mapStateToProps = state => ({
@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchUser: (user) => { dispatch(fetchUser(user)); },
   sortBy: (type) => { dispatch(sortBy(type)); },
   filterBy: (language) => { dispatch(filterBy(language)); },
 });

@@ -22,12 +22,13 @@ class Pagination extends Component {
     ));
 
   render() {
-    return (
+    return (this.props.totalPages > 1 ?
       <div>
         <button onClick={this.previousPage}> Previous Page </button>
         <ul> {this.renderPageList()} </ul>
         <button onClick={this.nextPage}> Next Page </button>
       </div>
+      : <div />
     );
   }
 }

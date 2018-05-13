@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { FETCH_USER, NEXT_PAGE, PREVIOUS_PAGE, GO_TO_PAGE, SORT, FILTER } from '../actions/types';
+import { FETCH_USER, NEXT_PAGE, PREVIOUS_PAGE, GO_TO_PAGE, SORT, FILTER, SEARCH } from '../actions/types';
 
 const initialState = {
   originalResults: [],
@@ -27,12 +27,18 @@ const sortResults = (by = 'name', results = []) => {
 
 const filterResults = (language, results = []) => {
   const filtered = _.filter(results, { language });
-
   return filtered;
 };
 
+const searchResults = (term, results = []) => {
+  const searched = results.filter(repo => repo.name.toLowerCase().includes(term.toLowerCase()));
+  return searched;
+};
+
 const User = (state = initialState, action) => {
-  const { currentPage, perPage, cachedResults, originalResults } = state;
+  const {
+    currentPage, perPage, cachedResults, originalResults,
+  } = state;
   let newCachedResults;
   switch (action.type) {
     case FETCH_USER:
@@ -41,7 +47,7 @@ const User = (state = initialState, action) => {
         originalResults: action.payload,
         cachedResults: action.payload,
         results: slicedList(currentPage, perPage, action.payload),
-        totalPages: Math.ceil(action.payload.length / 30),
+        totalPages: Math.ceil(action.payload.length / perPage),
       };
 
     case GO_TO_PAGE:
@@ -71,6 +77,7 @@ const User = (state = initialState, action) => {
       return {
         ...state,
         cachedResults: newCachedResults,
+        currentPage: 1,
         results: slicedList(1, perPage, newCachedResults),
       };
 
@@ -80,14 +87,26 @@ const User = (state = initialState, action) => {
       return {
         ...state,
         cachedResults: newCachedResults,
+        totalPages: Math.ceil(newCachedResults.length / perPage),
+        currentPage: 1,
+        results: slicedList(1, perPage, newCachedResults),
+      };
+
+    case SEARCH:
+      newCachedResults = searchResults(action.payload, originalResults);
+
+      return {
+        ...state,
+        cachedResults: newCachedResults,
+        totalPages: Math.ceil(newCachedResults.length / perPage),
+        currentPage: 1,
         results: slicedList(1, perPage, newCachedResults),
       };
 
     default:
       return {
         ...state,
-        results: action.payload,
-        totalPages: state.results.length,
+        totalPages: originalResults.length,
       };
   }
 };

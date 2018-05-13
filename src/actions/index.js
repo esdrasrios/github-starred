@@ -1,12 +1,12 @@
 import axios from 'axios';
 import _ from 'lodash';
 import parse from 'parse-link-header';
-import { FETCH_USER, NEXT_PAGE, PREVIOUS_PAGE, GO_TO_PAGE, SORT, FILTER } from './types';
+import { FETCH_USER, NEXT_PAGE, PREVIOUS_PAGE, GO_TO_PAGE, SORT, FILTER, SEARCH } from './types';
 import API_KEY from './apiKey';
 
 const API_URI = 'https://api.github.com/users';
 
-export const fetchUser = async (user) => {
+export const fetchUser = async user => {
   const req = `${API_URI}/${user}/starred?${API_KEY}&per_page=100`;
   const res = await axios.get(req);
 
@@ -27,17 +27,17 @@ export const fetchUser = async (user) => {
   };
 };
 
-export const goToPage = page => ({
-  type: GO_TO_PAGE,
-  payload: page,
-});
-
 export const nextPage = () => ({
   type: NEXT_PAGE,
 });
 
 export const previousPage = () => ({
   type: PREVIOUS_PAGE,
+});
+
+export const goToPage = page => ({
+  type: GO_TO_PAGE,
+  payload: page,
 });
 
 export const sortBy = type => ({
@@ -48,4 +48,9 @@ export const sortBy = type => ({
 export const filterBy = language => ({
   type: FILTER,
   payload: language,
+});
+
+export const searchBy = term => ({
+  type: SEARCH,
+  payload: term,
 });

@@ -7,18 +7,13 @@ class SearchInput extends Component {
       searchTerm: '',
     };
   }
-  componentDidMount() {
-    this.props.fetchUser('rodrigorm');
+  handleChange = async (e) => {
+    await this.setState({ searchTerm: e.target.value });
+    this.props.searchBy(this.state.searchTerm);
   }
-
-  handleChange = (e) => {
-    this.setState({ searchTerm: e.target.value });
-  }
-
   handleClick = () => {
-    this.props.fetchUser(this.state.searchTerm);
+    this.props.searchBy(this.state.searchTerm);
   }
-
   render() {
     return (
       <div>
@@ -27,9 +22,8 @@ class SearchInput extends Component {
           type="text"
           value={this.state.searchTerm}
           onChange={this.handleChange}
-          placeholder="Type something here..."
+          placeholder="Search a repo here..."
         />
-        <button onClick={this.handleClick}> Search </button>
       </div>
     );
   }
